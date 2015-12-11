@@ -448,6 +448,7 @@ if (!$rawfilter) {
 <?php
 	foreach ($filterlog as $filterent) {
 ?>
+			<tbody>
 				<tr>
 					<td style="white-space:nowrap;">
 						<?=htmlspecialchars($filterent['time'])?>
@@ -462,6 +463,7 @@ if (!$rawfilter) {
 						<?=htmlspecialchars($filterent['message'])?>
 					</td>
 				</tr>
+			</tbody>
 <?php
 	} // e-o-foreach
 ?>
