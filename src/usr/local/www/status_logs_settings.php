@@ -60,6 +60,7 @@ $pconfig['logdefaultblock'] = !isset($config['syslog']['nologdefaultblock']);
 $pconfig['logdefaultpass'] = isset($config['syslog']['nologdefaultpass']);
 $pconfig['logbogons'] = !isset($config['syslog']['nologbogons']);
 $pconfig['logprivatenets'] = !isset($config['syslog']['nologprivatenets']);
+$pconfig['loglinets'] = !isset($config['syslog']['nologlinets']);
 $pconfig['lognginx'] = !isset($config['syslog']['nolognginx']);
 $pconfig['rawfilter'] = isset($config['syslog']['rawfilter']);
 $pconfig['filterdescriptions'] = $config['syslog']['filterdescriptions'];
@@ -139,11 +140,13 @@ if ($_POST['resetlogs'] == gettext("Reset Log Files")) {
 		$oldnologdefaultpass = isset($config['syslog']['nologdefaultpass']);
 		$oldnologbogons = isset($config['syslog']['nologbogons']);
 		$oldnologprivatenets = isset($config['syslog']['nologprivatenets']);
+		$oldnologlinets = isset($config['syslog']['nologlinets']);
 		$oldnolognginx = isset($config['syslog']['nolognginx']);
 		$config['syslog']['nologdefaultblock'] = $_POST['logdefaultblock'] ? false : true;
 		$config['syslog']['nologdefaultpass'] = $_POST['logdefaultpass'] ? true : false;
 		$config['syslog']['nologbogons'] = $_POST['logbogons'] ? false : true;
 		$config['syslog']['nologprivatenets'] = $_POST['logprivatenets'] ? false : true;
+		$config['syslog']['nologlinets'] = $_POST['loglinets'] ? false : true;
 		$config['syslog']['nolognginx'] = $_POST['lognginx'] ? false : true;
 		$config['syslog']['rawfilter'] = $_POST['rawfilter'] ? true : false;
 		$config['syslog']['igmpxverbose'] = $_POST['igmpxverbose'] ? true : false;
@@ -169,6 +172,7 @@ if ($_POST['resetlogs'] == gettext("Reset Log Files")) {
 		    ($oldnologdefaultpass !== isset($config['syslog']['nologdefaultpass'])) ||
 		    ($oldnologbogons !== isset($config['syslog']['nologbogons'])) ||
 		    ($oldnologprivatenets !== isset($config['syslog']['nologprivatenets']))) {
+			($oldnologlinets !== isset($config['syslog']['nologlinets'])) ||
 			$retval |= filter_configure();
 		}
 
@@ -279,6 +283,13 @@ $section->addInput(new Form_Checkbox(
 	null,
 	'Log packets blocked by \'Block Private Networks\' rules',
 	$pconfig['logprivatenets']
+));
+
+$section->addInput(new Form_Checkbox(
+	'loglinets',
+	null,
+	'Log packets blocked by \'Block Local Identification Networks\' rules',
+	$pconfig['loglinets']
 ));
 
 $section->addInput(new Form_Checkbox(

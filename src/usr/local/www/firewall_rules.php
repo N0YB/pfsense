@@ -337,6 +337,7 @@ display_top_tabs($tab_array, false, 'pills');
 $showantilockout = false;
 $showprivate = false;
 $showblockbogons = false;
+$showblocklin = false;
 
 if (!isset($config['system']['webgui']['noantilockout']) &&
     (((count($config['interfaces']) > 1) && ($if == 'lan')) ||
@@ -351,6 +352,10 @@ if (isset($config['interfaces'][$if]['blockpriv'])) {
 if (isset($config['interfaces'][$if]['blockbogons'])) {
 	$showblockbogons = true;
 }
+if (isset($config['interfaces'][$if]['blocklin'])) {
+	$showblocklin = true;
+}	
+
 
 /* Load the counter data of each pf rule. */
 $rulescnt = pfSense_get_pf_rules();
@@ -392,7 +397,7 @@ $columns_in_table = 13;
 					</tr>
 				</thead>
 
-<?php if ($showblockbogons || $showantilockout || $showprivate) :
+<?php if ($showblockbogons || $showantilockout || $showprivate || $showblocklin) :
 ?>
 				<tbody>
 <?php
@@ -456,6 +461,25 @@ $columns_in_table = 13;
 						</td>
 					</tr>
 <?php 	endif;?>
+<?php if ($showblocklin): ?>
+					<tr id="LIN">
+						<td></td>
+						<td title="<?=gettext("traffic is blocked")?>"><i class="fa fa-times text-danger"></i></td>
+						<td><?php print_states(intval(RFC6890_TRACKER)); ?></td>
+						<td>*</td>
+						<td><?=sprintf(gettext("RFC 6890 networks"), "<br />");?></td>
+						<td>*</td>
+						<td>*</td>
+						<td>*</td>
+						<td>*</td>
+						<td>*</td>
+						<td></td>
+						<td><?=gettext("Block local identification networks");?></td>
+						<td>
+							<a href="interfaces.php?if=<?=htmlspecialchars($if)?>" title="<?=gettext("Settings");?>"><i class="fa fa-cog"></i></a>
+						</td>
+					</tr>
+<?php endif; ?>
 			</tbody>
 <?php endif;?>
 			<tbody class="user-entries">

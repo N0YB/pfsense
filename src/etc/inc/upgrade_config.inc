@@ -5432,4 +5432,16 @@ function additional_config_upgrade() {
 	global $config;
 }
 
+function upgrade_XXX_to_YYY_Interfaces__Local_Identification_Networks__Filter_Option() {
+	global $config;
+
+	if (is_array($config['interfaces'])) {
+		foreach ($config['interfaces'] as $key => $interface) {
+			$config['interfaces'][$key]['blocklin'] = isset($interface['blockbogons']);
+		}
+	}
+
+	$config['syslog']['nologlinets'] = isset($config['syslog']['nologbogons']);
+}
+
 ?>
