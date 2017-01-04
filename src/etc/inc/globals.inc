@@ -106,6 +106,7 @@ $g = array(
 	"crashreporterurl" => "https://crashreporter.pfsense.org/crash_reporter.php",
 	"debug" => false,
 	"latest_config" => "15.8",
+//	"latest_config" => "YY.Y",
 	"nopkg_platforms" => array("cdrom"),
 	"minimum_ram_warning" => "101",
 	"minimum_ram_warning_text" => "128 MB",
